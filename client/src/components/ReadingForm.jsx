@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { SLOTS } from '../lib/slots';
 import { todayIso } from '../lib/dates';
 import { validateReading } from '../lib/validation';
@@ -15,6 +15,7 @@ export default function ReadingForm({ initial, defaultDate, onSubmit, onCancel, 
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState('');
   const [saving, setSaving] = useState(false);
+  const id = useId();
 
   function update(field) {
     return (event) => {
@@ -45,14 +46,21 @@ export default function ReadingForm({ initial, defaultDate, onSubmit, onCancel, 
   return (
     <form className="reading-form" onSubmit={handleSubmit} noValidate>
       <div className="field">
-        <label htmlFor="reading-date">Date</label>
-        <input id="reading-date" type="date" max={todayIso()} value={form.date} onChange={update('date')} />
+        <label htmlFor={`${id}-date`}>Date</label>
+        <input
+          id={`${id}-date`}
+          name="date"
+          type="date"
+          max={todayIso()}
+          value={form.date}
+          onChange={update('date')}
+        />
         {errors.date && <p className="field-error" role="alert">{errors.date}</p>}
       </div>
 
       <div className="field">
-        <label htmlFor="reading-slot">Time slot</label>
-        <select id="reading-slot" value={form.slot} onChange={update('slot')}>
+        <label htmlFor={`${id}-slot`}>Time slot</label>
+        <select id={`${id}-slot`} name="slot" value={form.slot} onChange={update('slot')}>
           {SLOTS.map((slot) => (
             <option key={slot.key} value={slot.key}>
               {slot.label}
@@ -63,9 +71,10 @@ export default function ReadingForm({ initial, defaultDate, onSubmit, onCancel, 
       </div>
 
       <div className="field">
-        <label htmlFor="reading-value">Value (mg/dl)</label>
+        <label htmlFor={`${id}-value`}>Value (mg/dl)</label>
         <input
-          id="reading-value"
+          id={`${id}-value`}
+          name="value"
           type="text"
           inputMode="numeric"
           placeholder="e.g. 110"

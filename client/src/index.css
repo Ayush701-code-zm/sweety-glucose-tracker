@@ -482,3 +482,7 @@ select:focus {
   margin-top: 80px;
   color: var(--muted);
 }
+
+.card > h2 {
+  margin-bottom: 16px;
+}
