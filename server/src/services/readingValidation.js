@@ -9,7 +9,7 @@ const MESSAGES = {
   dateInvalid: 'Please enter a valid date.',
   slotInvalid: 'Please choose a time slot.',
   maxPerDay: 'You can add only 4 readings per day.',
-  duplicateSlot: (slotLabel) => `You already have an ${slotLabel} reading for this date.`,
+  duplicateSlot: (slotLabel) => `You already have ${/^[aeiou]/i.test(slotLabel) ? 'an' : 'a'} ${slotLabel} reading for this date.`,
 };
 
 function parseValue(raw) {
